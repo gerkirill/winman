@@ -1,16 +1,36 @@
 const { spawnSync } = require('child_process');
 const { exit, env } = require('process');
 
-const APP_NAME = env.APP_NAME;
+function parseArgs(args) {
+  const params = {};
+  for (let i = 0; i < args.length; i++) {
+    switch (args[i]) {
+      case '-n':
+        params.name = args[++i];
+        break;
+      case '-c':
+        params.command = args[++i];
+        break;
+      case '-s':
+        params.spawn = true;
+        break;
+    }
+  }
+  return params;
+}
+
+const args = parseArgs(process.argv.slice(2));
+
+const APP_NAME = args.name || env.APP_NAME;
 if (!APP_NAME) {
   console.error('APP_NAME is not set');
   exit(1);
 }
 
 // todo: what if APP_NAME is not set? But SPAWN and APP_COMMAND are set.
-const APP_COMMAND = env.APP_COMMAND || APP_NAME.toLowerCase() || '';
-const SPAWN = env.SPAWN;
-
+const APP_COMMAND = args.command || env.APP_COMMAND || APP_NAME.toLowerCase();
+const SPAWN = args.spawn || env.SPAWN || false;
+console.log({ APP_NAME, APP_COMMAND, SPAWN });
 if (SPAWN) {
   // todo: minimize intersecting windows
   spawnSync('nohup', [APP_COMMAND]);
@@ -24,7 +44,6 @@ const activeWindow = allWindows.find(w => w.id === activeWindowId);
 let nextWindowId;
 if (activeWindow.winClass.toLowerCase().includes(APP_NAME.toLowerCase())) {
   const allClassIds = getWindowIdsByClass(APP_NAME, false);
-  console.log({ allClassIds, activeWindowId });
   nextWindowId = getNextId(allClassIds, activeWindowId);
 } else {
   const allClassIds = getWindowIdsByClass(APP_NAME, true);
