@@ -32,3 +32,6 @@ set_shortcut "<Super>v" "$SCRIPT_DIR/switch.sh -n Vivaldi"
 set_shortcut "<Super>d" "$SCRIPT_DIR/utils/hideall.sh"
 set_shortcut "<Super>b" "$SCRIPT_DIR/utils/win-tg-max.sh"
 set_shortcut "<Super>q" "$SCRIPT_DIR/utils/win-min.sh"
+
+set_shortcut "<Super>m" "$SCRIPT_DIR/scroll.sh"
+set_shortcut "<Super>n" "$SCRIPT_DIR/scroll.sh -b"

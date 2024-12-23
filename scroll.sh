@@ -18,6 +18,6 @@ fi
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-$NODE_CMD $SCRIPT_DIR/src/switch.js "$@"
+$NODE_CMD $SCRIPT_DIR/src/scroll.js "$@"
 ## For debugging purposes - replace above line with:
 #  $NODE_CMD $SCRIPT_DIR/index.js "$@" >> $SCRIPT_DIR/winman.log 2>&1
